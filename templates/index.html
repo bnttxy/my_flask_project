@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>My News List</h1>
+    
+    <ul>
+      {% for item in news_items %}
+        <li>{{ item.title }}</li>
+      {% endfor %}
+    </ul>
+    
+  </body>
+</html>
