@@ -1,15 +1,16 @@
-from flask import Flask, render_template
+# แก้บรรทัดบนสุด เพิ่ม url_for เข้ามา (จำเป็นต้องใช้ในการสร้างลิงก์)
+from flask import Flask, render_template, url_for
 
-app = Flask(__name__)
+# ... (ส่วน news_items และ index เหมือนเดิม) ...
 
-# 1. เพิ่มข้อมูลข่าวด้านบน (จำลอง Database)
-news_items = {
-    1: {'id': 1, 'title': 'COVID-19 update', 'body': 'This is a news on COVID-19'},
-    2: {'id': 2, 'title': 'Facemasks found', 'body': 'Recent news on facemask production'},
-    3: {'id': 3, 'title': 'Python 4', 'body': 'Python 4 will be out soon.... this is FAKE'},
-}
-
-@app.route("/")
-def index():
-    # 2. ส่งข้อมูลข่าว (news_items.values()) ไปที่ template
-    return render_template('index.html', news_items=news_items.values())
+# เพิ่มส่วนนี้ต่อท้ายสุด (ห้ามย่อหน้า)
+@app.route('/news/<id>/')
+def show_news_item(id):
+    # ดึงข่าวตาม id ที่ส่งมา (ต้องแปลง id เป็น int ก่อนเพราะ url ส่งมาเป็น string)
+    news_item = news_items[int(id)]
+    
+    # ส่งข้อมูล title และ body ไปให้ template ใหม่
+    return render_template('news_item.html',
+                           id=news_item['id'],
+                           title=news_item['title'],
+                           body=news_item['body'])
