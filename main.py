@@ -5,7 +5,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# ข้อมูลข่าวจำลอง
+
 news_items = {
     1: {'id': 1, 'title': 'COVID-19 update', 'body': 'This is a news on COVID-19'},
     2: {'id': 2, 'title': 'Facemasks found', 'body': 'Recent news on facemask production'},
@@ -16,7 +16,7 @@ news_items = {
 def index():
     name = 'Somchai'
     time = datetime.now()
-    # ส่งตัวแปร name และ time ไปด้วย ตามแบบฝึกหัด
+
     return render_template('index.html', 
                            name=name, 
                            time=time,
@@ -30,10 +30,9 @@ def show_news_item(id):
                            title=news_item['title'],
                            body=news_item['body'])
 
-# --- ส่วนที่เพิ่มมาใหม่สำหรับคลิปที่ 3 (ระบบสร้างข่าว) ---
 
 def new_news_item(title, body):
-    # หา ID ใหม่ (เอาค่ามากสุด + 1)
+
     new_id = max(news_items.keys()) + 1
     return {
         'id': new_id,
@@ -43,10 +42,10 @@ def new_news_item(title, body):
 
 @app.route('/news/create/', methods=['POST'])
 def create_news_item():
-    # รับค่าจากฟอร์ม
+
     item = new_news_item(request.form['title'],
                          request.form['body'])
-    # บันทึกลง dictionary
+
     news_items[item['id']] = item
-    # บันทึกเสร็จแล้วดีดกลับไปหน้าแรก
+
     return redirect(url_for('index'))
